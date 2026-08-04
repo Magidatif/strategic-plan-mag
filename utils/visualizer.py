@@ -273,8 +273,12 @@ def create_activity_treemap(df, is_dark=True):
     return fig
 
 def create_bottom_activities_chart(df, is_dark=True):
-    """Render a bar chart of the bottom 15 lowest performing Sub-Activities"""
-    act_df = df[df['Sub-Activity'] != 'Unspecified'].groupby('Sub-Activity')['completion_numeric'].mean().reset_index()
+    """Render a bar chart of the bottom 15 active Sub-Activities (1% to 99%)"""
+    act_df = df[
+        (df['Sub-Activity'] != 'Unspecified') & 
+        (df['completion_numeric'] > 0) & 
+        (df['completion_numeric'] < 100)
+    ].groupby('Sub-Activity')['completion_numeric'].mean().reset_index()
     act_df.columns = ['Sub_Activity', 'Avg_Completion']
     
     bottom_act = act_df.sort_values(by='Avg_Completion', ascending=True).head(15)
