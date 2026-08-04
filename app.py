@@ -36,7 +36,7 @@ inject_css()
 with st.sidebar:
     st.title("🎨 Theme & Controls")
     
-    is_dark = True
+    is_dark = False
     
     st.markdown(f"""
     <div style="margin-top: 10px; margin-bottom: 15px;">
