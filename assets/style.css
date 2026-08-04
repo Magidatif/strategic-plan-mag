@@ -93,7 +93,6 @@ html, body, [class*="css"] {
 }
 
 /* Hide Streamlit Default UI Elements */
-header { visibility: hidden; }
 footer { visibility: hidden; }
 #MainMenu { visibility: hidden; }
 [data-testid="stToolbar"] { visibility: hidden; }
