@@ -113,8 +113,10 @@ def create_department_performance_chart(df, is_dark=True):
     border_color = '#0F172A' if is_dark else '#FFFFFF'
     grid_color = '#334155' if is_dark else '#E2E8F0'
     
+    text_color = '#F8FAFC' if is_dark else '#0F172A'
     fig.update_traces(
         textposition='outside',
+        textfont=dict(color=text_color, size=14),
         marker=dict(line=dict(color=border_color, width=1))
     )
     fig.update_layout(
@@ -146,9 +148,11 @@ def create_objective_progress_chart(df, is_dark=True):
     )
     grid_color = '#334155' if is_dark else '#E2E8F0'
     
+    text_color = '#F8FAFC' if is_dark else '#0F172A'
     fig.update_traces(
         text=obj_df['Avg_Completion'].apply(lambda x: f"{x:.1f}%"),
-        textposition='outside'
+        textposition='outside',
+        textfont=dict(color=text_color, size=14)
     )
     fig.update_layout(
         height=max(300, len(obj_df) * 45),
@@ -186,7 +190,11 @@ def create_priority_status_chart(df, is_dark=True):
         labels={'Priority': 'Priority Level', 'Count': 'Number of Activities', 'Status_EN': 'Status'},
         title="Activities Distribution by Priority & Execution Status"
     )
-    fig.update_traces(textposition='outside')
+    text_color = '#F8FAFC' if is_dark else '#0F172A'
+    fig.update_traces(
+        textposition='outside',
+        textfont=dict(color=text_color, size=14)
+    )
     fig.update_layout(height=380, xaxis=dict(gridcolor=grid_color), yaxis=dict(gridcolor=grid_color), **get_plotly_layout(is_dark))
     return fig
 
@@ -211,6 +219,10 @@ def create_gap_summary_chart(gap_df, is_dark=True):
         color_continuous_scale=['#F59E0B', '#EF4444'],
         title="Top Departments with Operational Gaps & Delays"
     )
-    fig.update_traces(textposition='outside')
+    text_color = '#F8FAFC' if is_dark else '#0F172A'
+    fig.update_traces(
+        textposition='outside',
+        textfont=dict(color=text_color, size=14)
+    )
     fig.update_layout(height=280, coloraxis_showscale=False, xaxis=dict(gridcolor=grid_color), yaxis=dict(gridcolor=grid_color), **get_plotly_layout(is_dark))
     return fig
