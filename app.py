@@ -85,7 +85,7 @@ with st.sidebar:
         selected_status_filter = st.selectbox("🚦 Execution Status:", statuses)
         
         # Filter 5: Priority
-        priorities = ['All', 'High', 'Medium']
+        priorities = ['All'] + sorted([str(x) for x in df_raw['Priority'].unique() if str(x) != 'Unspecified'])
         selected_priority = st.selectbox("⚡ Priority Level:", priorities)
 
 # Card colors based on theme

@@ -71,9 +71,9 @@ def load_data():
         # Standardize Priority
         df['Priority_clean'] = df['Priority'].astype(str).str.strip().str.lower()
         df['Priority'] = 'Unspecified'
-        df.loc[df['Priority_clean'].str.contains('high', na=False), 'Priority'] = 'High'
-        df.loc[df['Priority_clean'].str.contains('medium|midium', na=False), 'Priority'] = 'Medium'
-        df.loc[df['Priority_clean'].str.contains('low', na=False), 'Priority'] = 'Low'
+        df.loc[df['Priority_clean'].str.contains('high|عاجل|أول|اول|قصوى', regex=True, na=False), 'Priority'] = 'High'
+        df.loc[df['Priority_clean'].str.contains('medium|midium|ثاني|متوسط', regex=True, na=False), 'Priority'] = 'Medium'
+        df.loc[df['Priority_clean'].str.contains('low|ثالث|ضعيف|منخفض', regex=True, na=False), 'Priority'] = 'Low'
 
         # Clean string columns
         string_cols = ['Branch Name', 'STRATEGIC OBJECTIVES', 'OUTCOMES / PROGRAMS', 
