@@ -200,30 +200,27 @@ with tab_overview:
     
     st.markdown("<br>", unsafe_allow_html=True)
     
-    col_chart1, col_chart2 = st.columns([1, 1])
-    
-    with col_chart1:
-        st.markdown("#### ⏱️ Overall Completion Gauge")
-        gauge_fig = create_overall_completion_gauge(avg_completion, is_dark=is_dark)
-        st.plotly_chart(gauge_fig, use_container_width=True, key=f"gauge_{is_dark}", theme=None)
-            
-    with col_chart2:
-        st.markdown("#### 🍩 Execution Status Breakdown")
-        donut_fig = create_status_donut_chart(df_filtered, is_dark=is_dark)
-        st.plotly_chart(donut_fig, use_container_width=True, key=f"donut_{is_dark}", theme=None)
+    st.markdown("#### ⏱️ Overall Completion Gauge")
+    gauge_fig = create_overall_completion_gauge(avg_completion, is_dark=is_dark)
+    st.plotly_chart(gauge_fig, use_container_width=True, key=f"gauge_{is_dark}", theme=None)
         
     st.divider()
+
+    st.markdown("#### 🍩 Execution Status Breakdown")
+    donut_fig = create_status_donut_chart(df_filtered, is_dark=is_dark)
+    st.plotly_chart(donut_fig, use_container_width=True, key=f"donut_{is_dark}", theme=None)
     
-    col_obj, col_prio = st.columns([1.2, 0.8])
-    with col_obj:
-        st.markdown("#### 🎯 Completion Rate by Strategic Objective")
-        obj_fig = create_objective_progress_chart(df_filtered, is_dark=is_dark)
-        st.plotly_chart(obj_fig, use_container_width=True, key=f"obj_{is_dark}", theme=None)
-            
-    with col_prio:
-        st.markdown("#### ⚡ Priority & Execution Status Breakdown")
-        prio_fig = create_priority_status_chart(df_filtered, is_dark=is_dark)
-        st.plotly_chart(prio_fig, use_container_width=True, key=f"prio_{is_dark}", theme=None)
+    st.divider()
+    
+    st.markdown("#### 🎯 Completion Rate by Strategic Objective")
+    obj_fig = create_objective_progress_chart(df_filtered, is_dark=is_dark)
+    st.plotly_chart(obj_fig, use_container_width=True, key=f"obj_{is_dark}", theme=None)
+        
+    st.divider()
+
+    st.markdown("#### ⚡ Priority & Execution Status Breakdown")
+    prio_fig = create_priority_status_chart(df_filtered, is_dark=is_dark)
+    st.plotly_chart(prio_fig, use_container_width=True, key=f"prio_{is_dark}", theme=None)
 
 # --- TAB 2: DEPARTMENT PERFORMANCE ---
 with tab_departments:
