@@ -277,7 +277,7 @@ def create_bottom_activities_chart(df, is_dark=True):
     act_df = df[
         (df['Sub-Activity'] != 'Unspecified') & 
         (df['completion_numeric'] > 0) & 
-        (df['completion_numeric'] < 100)
+        (df['completion_numeric'] <= 100)
     ].groupby('Sub-Activity')['completion_numeric'].mean().reset_index()
     act_df.columns = ['Sub_Activity', 'Avg_Completion']
     

@@ -273,7 +273,7 @@ with tab_activities:
         
     st.divider()
     
-    st.markdown("### 🚧 All Active Sub-Activities (In Progress 1-99%)")
+    st.markdown("### 🚧 All Active Sub-Activities (Started & Completed)")
     bottom_fig = create_bottom_activities_chart(df_filtered, is_dark=is_dark)
     st.plotly_chart(bottom_fig, use_container_width=True, key=f"bottom_{is_dark}", theme=None)
 
