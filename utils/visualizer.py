@@ -79,8 +79,7 @@ def create_status_donut_chart(df, is_dark=True):
         names='Status_EN',
         color='Status_EN',
         color_discrete_map=color_map,
-        hole=0.5,
-        title="Activity Execution Status Breakdown"
+        hole=0.5
     )
     
     border_color = '#0F172A' if is_dark else '#FFFFFF'
@@ -105,11 +104,9 @@ def create_department_performance_chart(df, is_dark=True):
         y='Department',
         x='Avg_Completion',
         orientation='h',
-        text=dept_df['Avg_Completion'].apply(lambda x: f"{x:.1f}%"),
         color='Avg_Completion',
         color_continuous_scale=['#EF4444', '#3B82F6', '#10B981'],
-        labels={'Department': 'Responsible Department', 'Avg_Completion': 'Avg Completion Rate (%)'},
-        title="Completion Rate by Responsible Department"
+        labels={'Department': 'Responsible Department', 'Avg_Completion': 'Avg Completion Rate (%)'}
     )
     
     border_color = '#0F172A' if is_dark else '#FFFFFF'
@@ -117,6 +114,7 @@ def create_department_performance_chart(df, is_dark=True):
     
     text_color = '#F8FAFC' if is_dark else '#000000'
     fig.update_traces(
+        text=dept_df['Avg_Completion'].apply(lambda x: f"{x:.1f}%"),
         textposition='outside',
         textfont=dict(color=text_color, size=14),
         marker=dict(line=dict(color=border_color, width=1))
@@ -145,8 +143,7 @@ def create_objective_progress_chart(df, is_dark=True):
         orientation='h',
         hover_data={'Objective': True, 'Short_Objective': False, 'Avg_Completion': ':.1f%'},
         color='Avg_Completion',
-        color_continuous_scale=['#EF4444', '#F59E0B', '#10B981'],
-        title="Completion Rate by Strategic Objective"
+        color_continuous_scale=['#EF4444', '#F59E0B', '#10B981']
     )
     grid_color = '#334155' if is_dark else '#E2E8F0'
     
@@ -189,8 +186,7 @@ def create_priority_status_chart(df, is_dark=True):
         text='Text_Label',
         color_discrete_map=color_map,
         barmode='group',
-        labels={'Priority': 'Priority Level', 'Count': 'Number of Activities', 'Status_EN': 'Status'},
-        title="Activities Distribution by Priority & Execution Status"
+        labels={'Priority': 'Priority Level', 'Count': 'Number of Activities', 'Status_EN': 'Status'}
     )
     text_color = '#F8FAFC' if is_dark else '#000000'
     fig.update_traces(
@@ -219,8 +215,7 @@ def create_gap_summary_chart(gap_df, is_dark=True):
         orientation='h',
         text='Gap_Count',
         color='Gap_Count',
-        color_continuous_scale=['#F59E0B', '#EF4444'],
-        title="Top Departments with Operational Gaps & Delays"
+        color_continuous_scale=['#F59E0B', '#EF4444']
     )
     text_color = '#F8FAFC' if is_dark else '#0F172A'
     fig.update_traces(
