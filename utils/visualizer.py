@@ -232,12 +232,15 @@ def create_gap_summary_chart(gap_df, is_dark=True):
     # Calculate a dynamic height based on the number of rows (bars)
     dynamic_height = max(350, len(gap_counts) * 40)
     
+    layout_args = get_plotly_layout(is_dark)
+    layout_args['margin'] = dict(l=250, r=20, t=60, b=100) # Override left margin for long names
+    
     fig.update_layout(
         height=dynamic_height, 
         coloraxis_showscale=False, 
         xaxis=dict(gridcolor=grid_color, title="Number of Delayed Tasks"), 
         yaxis=dict(gridcolor=grid_color, title="", automargin=True, dtick=1), 
-        **get_plotly_layout(is_dark)
+        **layout_args
     )
     return fig
 
