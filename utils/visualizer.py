@@ -85,7 +85,7 @@ def create_status_donut_chart(df, is_dark=True):
     
     border_color = '#0F172A' if is_dark else '#FFFFFF'
     fig.update_traces(
-        textposition='inside', 
+        textposition='outside', 
         textinfo='percent+label+value',
         marker=dict(line=dict(color=border_color, width=2))
     )
