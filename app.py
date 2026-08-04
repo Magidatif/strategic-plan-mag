@@ -190,11 +190,11 @@ st.markdown("<br>", unsafe_allow_html=True)
 
 # Dashboard Tabs
 tab_overview, tab_departments, tab_activities, tab_gaps, tab_data = st.tabs([
-    "📊 Executive Summary & Strategic Objectives",
-    "🏛️ Department Operational Performance",
-    "🧩 Activities & Hierarchy Deep-Dive",
-    "⚠️ Operational Gap Analysis & Controls",
-    "📋 Master Strategic Data Table & Export"
+    "📊 Executive Summary",
+    "🏛️ Dept. Performance",
+    "🧩 Activities & Hierarchy",
+    "⚠️ Gap Analysis",
+    "📋 Data Export"
 ])
 
 # --- TAB 1: EXECUTIVE OVERVIEW ---
