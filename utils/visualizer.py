@@ -123,7 +123,7 @@ def create_department_performance_chart(df, is_dark=True):
         height=max(350, len(dept_df) * 35),
         coloraxis_showscale=False,
         xaxis=dict(range=[0, 115], gridcolor=grid_color),
-        yaxis=dict(gridcolor=grid_color),
+        yaxis=dict(gridcolor=grid_color, title="", automargin=True),
         **get_plotly_layout(is_dark)
     )
     return fig
@@ -133,7 +133,7 @@ def create_objective_progress_chart(df, is_dark=True):
     obj_df = df.groupby('STRATEGIC OBJECTIVES')['completion_numeric'].mean().reset_index()
     obj_df.columns = ['Objective', 'Avg_Completion']
     
-    obj_df['Short_Objective'] = obj_df['Objective'].apply(lambda x: str(x)[:50] + '...' if len(str(x)) > 50 else str(x))
+    obj_df['Short_Objective'] = obj_df['Objective'].apply(lambda x: str(x)[:70] + '...' if len(str(x)) > 70 else str(x))
     obj_df = obj_df.sort_values(by='Avg_Completion', ascending=True)
     
     fig = px.bar(
@@ -158,7 +158,7 @@ def create_objective_progress_chart(df, is_dark=True):
         height=max(300, len(obj_df) * 45),
         coloraxis_showscale=False,
         xaxis=dict(range=[0, 115], gridcolor=grid_color),
-        yaxis=dict(gridcolor=grid_color),
+        yaxis=dict(gridcolor=grid_color, title="", automargin=True),
         **get_plotly_layout(is_dark)
     )
     return fig
@@ -225,5 +225,5 @@ def create_gap_summary_chart(gap_df, is_dark=True):
         textposition='outside',
         textfont=dict(color=text_color, size=14)
     )
-    fig.update_layout(height=280, coloraxis_showscale=False, xaxis=dict(gridcolor=grid_color), yaxis=dict(gridcolor=grid_color), **get_plotly_layout(is_dark))
+    fig.update_layout(height=280, coloraxis_showscale=False, xaxis=dict(gridcolor=grid_color), yaxis=dict(gridcolor=grid_color, title="", automargin=True), **get_plotly_layout(is_dark))
     return fig
