@@ -70,29 +70,44 @@ with st.sidebar:
     df_raw, last_updated, error_msg = load_data()
 
     if not df_raw.empty:
+        df_filtered = df_raw.copy()
+        
         # Filter 1: Governorate / Branch
-        branches = ['All'] + sorted([str(x) for x in df_raw['Branch Name'].unique() if str(x) != 'غير محدد'])
+        branches = ['All'] + sorted([str(x) for x in df_filtered['Branch Name'].unique() if str(x) != 'غير محدد'])
         selected_branch = st.selectbox("📍 Governorate / Branch:", branches)
+        if selected_branch != 'All':
+            df_filtered = df_filtered[df_filtered['Branch Name'] == selected_branch]
         
         # Filter 2: Strategic Objective
-        objectives = ['All'] + sorted([str(x) for x in df_raw['STRATEGIC OBJECTIVES'].unique() if str(x) != 'Unspecified'])
+        objectives = ['All'] + sorted([str(x) for x in df_filtered['STRATEGIC OBJECTIVES'].unique() if str(x) != 'Unspecified'])
         selected_objective = st.selectbox("🎯 Strategic Objective:", objectives)
+        if selected_objective != 'All':
+            df_filtered = df_filtered[df_filtered['STRATEGIC OBJECTIVES'] == selected_objective]
         
         # New Filter: Sub-Activity
-        sub_activities = ['All'] + sorted([str(x) for x in df_raw['Sub-Activity'].unique() if str(x) != 'Unspecified'])
+        sub_activities = ['All'] + sorted([str(x) for x in df_filtered['Sub-Activity'].unique() if str(x) != 'Unspecified'])
         selected_sub_activity = st.selectbox("📌 Sub-Activity:", sub_activities)
+        if selected_sub_activity != 'All':
+            df_filtered = df_filtered[df_filtered['Sub-Activity'] == selected_sub_activity]
         
         # Filter 3: Responsible Department
-        departments = ['All'] + sorted([str(x) for x in df_raw['responsable dep'].unique() if str(x) != 'غير محدد'])
+        departments = ['All'] + sorted([str(x) for x in df_filtered['responsable dep'].unique() if str(x) != 'غير محدد'])
         selected_department = st.selectbox("🏛️ Responsible Dept:", departments)
+        if selected_department != 'All':
+            df_filtered = df_filtered[df_filtered['responsable dep'] == selected_department]
         
         # Filter 4: Status
         statuses = ['All', 'Completed', 'In Progress', 'Delayed']
         selected_status_filter = st.selectbox("🚦 Execution Status:", statuses)
+        if selected_status_filter != 'All':
+            status_map_lookup = {'Completed': 'Completed', 'In Progress': 'in progress', 'Delayed': 'delayed'}
+            df_filtered = df_filtered[df_filtered['STATUS_std'] == status_map_lookup[selected_status_filter]]
         
         # Filter 5: Priority
-        priorities = ['All'] + sorted([str(x) for x in df_raw['Priority'].unique() if str(x) != 'Unspecified'])
+        priorities = ['All'] + sorted([str(x) for x in df_filtered['Priority'].unique() if str(x) != 'Unspecified'])
         selected_priority = st.selectbox("⚡ Priority Level:", priorities)
+        if selected_priority != 'All':
+            df_filtered = df_filtered[df_filtered['Priority'] == selected_priority]
         
         # Add padding to prevent dropdown cutoff
         st.markdown("<br><br><br><br><br>", unsafe_allow_html=True)
@@ -124,28 +139,6 @@ if error_msg:
 if df_raw.empty:
     st.warning("⚠️ No data available in the Google Sheet.")
     st.stop()
-
-# Apply Filters to DataFrame
-df_filtered = df_raw.copy()
-
-if selected_branch != 'All':
-    df_filtered = df_filtered[df_filtered['Branch Name'] == selected_branch]
-
-if selected_objective != 'All':
-    df_filtered = df_filtered[df_filtered['STRATEGIC OBJECTIVES'] == selected_objective]
-
-if selected_sub_activity != 'All':
-    df_filtered = df_filtered[df_filtered['Sub-Activity'] == selected_sub_activity]
-
-if selected_department != 'All':
-    df_filtered = df_filtered[df_filtered['responsable dep'] == selected_department]
-
-if selected_status_filter != 'All':
-    status_map_lookup = {'Completed': 'Completed', 'In Progress': 'in progress', 'Delayed': 'delayed'}
-    df_filtered = df_filtered[df_filtered['STATUS_std'] == status_map_lookup[selected_status_filter]]
-
-if selected_priority != 'All':
-    df_filtered = df_filtered[df_filtered['Priority'] == selected_priority]
 
 # Compute Key Metrics
 total_activities = len(df_filtered)
