@@ -281,7 +281,7 @@ def create_bottom_activities_chart(df, is_dark=True):
     ].groupby('Sub-Activity')['completion_numeric'].mean().reset_index()
     act_df.columns = ['Sub_Activity', 'Avg_Completion']
     
-    bottom_act = act_df.sort_values(by='Avg_Completion', ascending=True).head(15)
+    bottom_act = act_df.sort_values(by='Avg_Completion', ascending=True)
     bottom_act['Short_Sub_Activity'] = bottom_act['Sub_Activity'].apply(lambda x: str(x)[:45] + '...' if len(str(x)) > 45 else str(x))
     
     fig = px.bar(
