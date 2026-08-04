@@ -192,9 +192,11 @@ def create_priority_status_chart(df, is_dark=True):
     fig.update_traces(
         textposition='outside',
         textfont=dict(color=text_color, size=13),
-        textangle=0
+        textangle=0,
+        cliponaxis=False
     )
-    fig.update_layout(height=380, xaxis=dict(gridcolor=grid_color), yaxis=dict(gridcolor=grid_color), **get_plotly_layout(is_dark))
+    max_count = priority_status['Count'].max() if not priority_status.empty else 10
+    fig.update_layout(height=380, xaxis=dict(gridcolor=grid_color), yaxis=dict(gridcolor=grid_color, range=[0, max_count * 1.2]), **get_plotly_layout(is_dark))
     return fig
 
 def create_gap_summary_chart(gap_df, is_dark=True):
