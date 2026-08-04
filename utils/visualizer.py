@@ -266,7 +266,8 @@ def create_activity_treemap(df, is_dark=True):
     border_color = '#0F172A' if is_dark else '#FFFFFF'
     fig.update_traces(
         textfont=dict(color=text_color, size=14),
-        marker=dict(line=dict(width=1, color=border_color))
+        marker=dict(line=dict(width=1, color=border_color)),
+        maxdepth=2
     )
     
     return fig
