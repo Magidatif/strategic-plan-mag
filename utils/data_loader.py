@@ -28,16 +28,26 @@ def load_data():
                 
                 for tab_name, df_tab in df_dict.items():
                     try:
-                        # Clean Governorate Title
-                        clean_gov_name = tab_name.strip().title()
-                        if 'portsaed' in tab_name.lower(): clean_gov_name = 'Port Said'
-                        elif 'sinai' in tab_name.lower() or 's.sinai' in tab_name.lower(): clean_gov_name = 'South Sinai'
-                        elif 'ismailia' in tab_name.lower(): clean_gov_name = 'Ismailia'
-                        elif 'suez' in tab_name.lower(): clean_gov_name = 'Suez'
-                        elif 'aswan' in tab_name.lower(): clean_gov_name = 'Aswan'
-                        elif 'luxor' in tab_name.lower(): clean_gov_name = 'Luxor'
+                        # Check if branch name is provided in column '0' or 0
+                        if '0' in df_tab.columns:
+                            df_tab = df_tab.rename(columns={'0': 'Branch Name'})
+                        elif 0 in df_tab.columns:
+                            df_tab = df_tab.rename(columns={0: 'Branch Name'})
+                            
+                        # If 'Branch Name' still doesn't exist, fallback to Tab Name
+                        if 'Branch Name' not in df_tab.columns:
+                            clean_gov_name = tab_name.strip().title()
+                            if 'portsaed' in tab_name.lower(): clean_gov_name = 'Port Said'
+                            elif 'sinai' in tab_name.lower() or 's.sinai' in tab_name.lower(): clean_gov_name = 'South Sinai'
+                            elif 'ismailia' in tab_name.lower(): clean_gov_name = 'Ismailia'
+                            elif 'suez' in tab_name.lower(): clean_gov_name = 'Suez'
+                            elif 'aswan' in tab_name.lower(): clean_gov_name = 'Aswan'
+                            elif 'luxor' in tab_name.lower(): clean_gov_name = 'Luxor'
+                            df_tab['Branch Name'] = clean_gov_name
                         
-                        df_tab['Branch Name'] = clean_gov_name
+                        # Clean up the branch name strings
+                        df_tab['Branch Name'] = df_tab['Branch Name'].astype(str).str.strip().str.title()
+                        
                         all_dfs.append(df_tab)
                     except Exception:
                         continue
