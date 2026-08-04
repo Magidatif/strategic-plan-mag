@@ -19,7 +19,9 @@ from utils.visualizer import (
     create_department_performance_chart,
     create_objective_progress_chart,
     create_priority_status_chart,
-    create_gap_summary_chart
+    create_gap_summary_chart,
+    create_activity_treemap,
+    create_bottom_activities_chart
 )
 
 # Load Base CSS
@@ -191,9 +193,10 @@ with kpi5:
 st.markdown("<br>", unsafe_allow_html=True)
 
 # Dashboard Tabs
-tab_overview, tab_departments, tab_gaps, tab_data = st.tabs([
+tab_overview, tab_departments, tab_activities, tab_gaps, tab_data = st.tabs([
     "📊 Executive Summary & Strategic Objectives",
     "🏛️ Department Operational Performance",
+    "🧩 Activities & Hierarchy Deep-Dive",
     "⚠️ Operational Gap Analysis & Controls",
     "📋 Master Strategic Data Table & Export"
 ])
@@ -257,7 +260,24 @@ with tab_departments:
     with st.expander("📋 View Department Data Summary Table"):
         st.dataframe(dept_status_summary.style.set_properties(**{'font-weight': 'bold', 'color': 'black'}).set_table_styles(th_styles), use_container_width=True)
 
-# --- TAB 3: GAP ANALYSIS & RISKS ---
+# --- TAB 3: ACTIVITIES & SUB-ACTIVITIES ---
+with tab_activities:
+    st.markdown("### 🧩 Strategic Activities & Sub-Activities Hierarchy")
+    st.info("💡 **Interactive Treemap:** Click on any Objective or Activity block to zoom in and view its specific Sub-Activities. Box size represents the number of tasks, while color represents the average completion rate (Red = Delayed/0%, Green = Completed/100%).")
+    
+    treemap_fig = create_activity_treemap(df_filtered, is_dark=is_dark)
+    if treemap_fig:
+        st.plotly_chart(treemap_fig, use_container_width=True, key=f"tree_{is_dark}", theme=None)
+    else:
+        st.warning("No activity hierarchy data available for the current selection.")
+        
+    st.divider()
+    
+    st.markdown("### 🚨 Bottom 15 Lowest Performing Activities")
+    bottom_fig = create_bottom_activities_chart(df_filtered, is_dark=is_dark)
+    st.plotly_chart(bottom_fig, use_container_width=True, key=f"bottom_{is_dark}", theme=None)
+
+# --- TAB 4: GAP ANALYSIS & RISKS ---
 with tab_gaps:
     st.markdown("### ⚠️ Operational Gap Control & Corrective Action Matrix")
     st.info("💡 Highlighting activities with operational gaps, high priorities, or delayed status requiring immediate intervention.")

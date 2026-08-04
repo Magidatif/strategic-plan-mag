@@ -223,5 +223,91 @@ def create_gap_summary_chart(gap_df, is_dark=True):
         textfont=dict(color=text_color, size=14)
     )
     fig.update_layout(height=280, coloraxis_showscale=False, xaxis=dict(gridcolor=grid_color), yaxis=dict(gridcolor=grid_color, title="", automargin=True), **get_plotly_layout(is_dark))
-    fig.update_layout(margin=dict(l=250, r=40))
+    return fig
+
+def create_activity_treemap(df, is_dark=True):
+    """Render a hierarchical treemap of Strategic Objective -> Activity -> Sub-Activity"""
+    # Filter out empty objectives/activities
+    tree_df = df[
+        (df['STRATEGIC OBJECTIVES'] != 'Unspecified') & 
+        (df['Activity'] != 'Unspecified')
+    ].copy()
+    
+    if tree_df.empty:
+        return None
+        
+    group_cols = ['STRATEGIC OBJECTIVES', 'Activity', 'Sub-Activity']
+    
+    # Truncate very long texts for better visualization
+    for col in group_cols:
+        tree_df[col] = tree_df[col].astype(str).apply(lambda x: x[:40] + '...' if len(x) > 40 else x)
+        
+    agg_df = tree_df.groupby(group_cols).agg(
+        Count=('Activity', 'size'),
+        Avg_Completion=('completion_numeric', 'mean')
+    ).reset_index()
+    
+    fig = px.treemap(
+        agg_df,
+        path=[px.Constant("Strategic Plan"), 'STRATEGIC OBJECTIVES', 'Activity', 'Sub-Activity'],
+        values='Count',
+        color='Avg_Completion',
+        color_continuous_scale=['#EF4444', '#F59E0B', '#10B981'],
+        color_continuous_midpoint=50,
+        hover_data={'Avg_Completion': ':.1f%'}
+    )
+    
+    fig.update_layout(
+        margin=dict(t=30, l=10, r=10, b=10),
+        height=600,
+        **get_plotly_layout(is_dark)
+    )
+    
+    text_color = '#F8FAFC' if is_dark else '#000000'
+    border_color = '#0F172A' if is_dark else '#FFFFFF'
+    fig.update_traces(
+        textfont=dict(color=text_color, size=14),
+        marker=dict(line=dict(width=1, color=border_color))
+    )
+    
+    return fig
+
+def create_bottom_activities_chart(df, is_dark=True):
+    """Render a bar chart of the bottom 15 lowest performing activities"""
+    act_df = df[df['Activity'] != 'Unspecified'].groupby('Activity')['completion_numeric'].mean().reset_index()
+    act_df.columns = ['Activity', 'Avg_Completion']
+    
+    bottom_act = act_df.sort_values(by='Avg_Completion', ascending=True).head(15)
+    bottom_act['Short_Activity'] = bottom_act['Activity'].apply(lambda x: str(x)[:45] + '...' if len(str(x)) > 45 else str(x))
+    
+    fig = px.bar(
+        bottom_act,
+        y='Short_Activity',
+        x='Avg_Completion',
+        orientation='h',
+        color='Avg_Completion',
+        color_continuous_scale=['#EF4444', '#F59E0B', '#10B981'],
+        hover_data={'Activity': True, 'Short_Activity': False, 'Avg_Completion': ':.1f%'},
+        labels={'Avg_Completion': 'Average Completion Rate (%)', 'Short_Activity': 'Activity'}
+    )
+    
+    grid_color = '#334155' if is_dark else '#E2E8F0'
+    text_color = '#F8FAFC' if is_dark else '#000000'
+    border_color = '#0F172A' if is_dark else '#FFFFFF'
+    
+    fig.update_traces(
+        text=bottom_act['Avg_Completion'].apply(lambda x: f"{x:.1f}%"),
+        textposition='outside',
+        textfont=dict(color=text_color, size=13),
+        marker=dict(line=dict(color=border_color, width=1))
+    )
+    
+    fig.update_layout(
+        height=max(400, len(bottom_act) * 35),
+        coloraxis_showscale=False,
+        xaxis=dict(range=[0, 120], gridcolor=grid_color),
+        yaxis=dict(gridcolor=grid_color, title="", automargin=True),
+        **get_plotly_layout(is_dark)
+    )
+    
     return fig
