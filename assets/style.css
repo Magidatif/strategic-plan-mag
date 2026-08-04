@@ -91,3 +91,9 @@ html, body, [class*="css"] {
     font-weight: 600;
     border: 1px solid rgba(20, 184, 166, 0.3);
 }
+
+/* Hide Streamlit Default UI Elements */
+header { visibility: hidden; }
+footer { visibility: hidden; }
+#MainMenu { visibility: hidden; }
+[data-testid="stToolbar"] { visibility: hidden; }
