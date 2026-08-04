@@ -257,11 +257,10 @@ def create_activity_treemap(df, is_dark=True):
         hover_data={'Avg_Completion': ':.1f%'}
     )
     
-    fig.update_layout(
-        margin=dict(t=30, l=10, r=10, b=10),
-        height=600,
-        **get_plotly_layout(is_dark)
-    )
+    layout = get_plotly_layout(is_dark)
+    layout['margin'] = dict(t=30, l=10, r=10, b=10)
+    layout['height'] = 600
+    fig.update_layout(**layout)
     
     text_color = '#F8FAFC' if is_dark else '#000000'
     border_color = '#0F172A' if is_dark else '#FFFFFF'
