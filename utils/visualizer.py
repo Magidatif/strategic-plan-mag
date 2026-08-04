@@ -272,22 +272,22 @@ def create_activity_treemap(df, is_dark=True):
     return fig
 
 def create_bottom_activities_chart(df, is_dark=True):
-    """Render a bar chart of the bottom 15 lowest performing activities"""
-    act_df = df[df['Activity'] != 'Unspecified'].groupby('Activity')['completion_numeric'].mean().reset_index()
-    act_df.columns = ['Activity', 'Avg_Completion']
+    """Render a bar chart of the bottom 15 lowest performing Sub-Activities"""
+    act_df = df[df['Sub-Activity'] != 'Unspecified'].groupby('Sub-Activity')['completion_numeric'].mean().reset_index()
+    act_df.columns = ['Sub_Activity', 'Avg_Completion']
     
     bottom_act = act_df.sort_values(by='Avg_Completion', ascending=True).head(15)
-    bottom_act['Short_Activity'] = bottom_act['Activity'].apply(lambda x: str(x)[:45] + '...' if len(str(x)) > 45 else str(x))
+    bottom_act['Short_Sub_Activity'] = bottom_act['Sub_Activity'].apply(lambda x: str(x)[:45] + '...' if len(str(x)) > 45 else str(x))
     
     fig = px.bar(
         bottom_act,
-        y='Short_Activity',
+        y='Short_Sub_Activity',
         x='Avg_Completion',
         orientation='h',
         color='Avg_Completion',
         color_continuous_scale=['#EF4444', '#F59E0B', '#10B981'],
-        hover_data={'Activity': True, 'Short_Activity': False, 'Avg_Completion': ':.1f%'},
-        labels={'Avg_Completion': 'Average Completion Rate (%)', 'Short_Activity': 'Activity'}
+        hover_data={'Sub_Activity': True, 'Short_Sub_Activity': False, 'Avg_Completion': ':.1f%'},
+        labels={'Avg_Completion': 'Average Completion Rate (%)', 'Short_Sub_Activity': 'Sub-Activity'}
     )
     
     grid_color = '#334155' if is_dark else '#E2E8F0'

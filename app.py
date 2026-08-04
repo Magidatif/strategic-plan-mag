@@ -75,8 +75,12 @@ with st.sidebar:
         selected_branch = st.selectbox("📍 Governorate / Branch:", branches)
         
         # Filter 2: Strategic Objective
-        objectives = ['All'] + sorted([str(x) for x in df_raw['STRATEGIC OBJECTIVES'].unique() if str(x) != 'غير محدد'])
+        objectives = ['All'] + sorted([str(x) for x in df_raw['STRATEGIC OBJECTIVES'].unique() if str(x) != 'Unspecified'])
         selected_objective = st.selectbox("🎯 Strategic Objective:", objectives)
+        
+        # New Filter: Sub-Activity
+        sub_activities = ['All'] + sorted([str(x) for x in df_raw['Sub-Activity'].unique() if str(x) != 'Unspecified'])
+        selected_sub_activity = st.selectbox("📌 Sub-Activity:", sub_activities)
         
         # Filter 3: Responsible Department
         departments = ['All'] + sorted([str(x) for x in df_raw['responsable dep'].unique() if str(x) != 'غير محدد'])
@@ -129,6 +133,9 @@ if selected_branch != 'All':
 
 if selected_objective != 'All':
     df_filtered = df_filtered[df_filtered['STRATEGIC OBJECTIVES'] == selected_objective]
+
+if selected_sub_activity != 'All':
+    df_filtered = df_filtered[df_filtered['Sub-Activity'] == selected_sub_activity]
 
 if selected_department != 'All':
     df_filtered = df_filtered[df_filtered['responsable dep'] == selected_department]
@@ -273,7 +280,7 @@ with tab_activities:
         
     st.divider()
     
-    st.markdown("### 🚨 Bottom 15 Lowest Performing Activities")
+    st.markdown("### 🚨 Bottom 15 Lowest Performing Sub-Activities")
     bottom_fig = create_bottom_activities_chart(df_filtered, is_dark=is_dark)
     st.plotly_chart(bottom_fig, use_container_width=True, key=f"bottom_{is_dark}", theme=None)
 
@@ -299,13 +306,13 @@ with tab_gaps:
         st.success("🎉 No high-risk operational gaps or delayed activities found in current selection!")
     else:
         display_gap_cols = [
-            'Branch Name', 'STRATEGIC OBJECTIVES', 'Activity', 'Priority', 
+            'Branch Name', 'STRATEGIC OBJECTIVES', 'Activity', 'Sub-Activity', 'Priority', 
             'completion_numeric', 'Gap Cause', 'Proposed Action', 'Required Resources', 'responsable dep'
         ]
         
         show_gap_df = gap_df[display_gap_cols].copy()
         show_gap_df.columns = [
-            'Branch/Governorate', 'Strategic Objective', 'Activity', 'Priority', 
+            'Branch/Governorate', 'Strategic Objective', 'Activity', 'Sub-Activity', 'Priority', 
             'Completion %', 'Gap Cause', 'Proposed Action', 'Required Resources', 'Department'
         ]
         
@@ -356,13 +363,13 @@ with tab_data:
         )
         
     display_cols_master = [
-        'Branch Name', 'STRATEGIC OBJECTIVES', 'OUTCOMES / PROGRAMS', 'Activity', 
+        'Branch Name', 'STRATEGIC OBJECTIVES', 'OUTCOMES / PROGRAMS', 'Activity', 'Sub-Activity', 
         'KPI', 'Target', 'Current Value', 'completion_numeric', 'STATUS_std', 'Priority', 'responsable dep'
     ]
     
     table_df = master_display[display_cols_master].copy()
     table_df.columns = [
-        'Governorate', 'Strategic Objective', 'Program / Outcome', 'Activity', 
+        'Governorate', 'Strategic Objective', 'Program / Outcome', 'Activity', 'Sub-Activity', 
         'KPI', 'Target', 'Current Value', 'Completion Rate', 'Status', 'Priority', 'Department'
     ]
     
