@@ -2,14 +2,14 @@
 Configuration file for Governorate Strategic Plan Dashboard (English Version)
 """
 
-SHEET_IDS = [
-    "1g8Hj76hwEpDyw4fveVG-zSV909NvoiIrbszGxL8JmNY",
-    "1ozzKaEBsa66yLowO2PA60vRFXDCDochhGu4sLjyW0iM",
-    "1jzNhXxuSL6wkVOgO3HCVsf9eAMVR4kBVerDI-hFc4Rw",
-    "1fAF5fE98QtRsJe_FNqa1IL7SQhdMH_7ZMjQ6sdE0xe4",
-    "12O43L7eTbYcUuXv6UAfCcFgiRTDSN51QeD33_zs0FSI",
-    "1ra91ajdyoiHr1-sFb2GG8f6veWWcLdxmE_tjYJK73Ag"
-]
+SHEET_SOURCES = {
+    "1g8Hj76hwEpDyw4fveVG-zSV909NvoiIrbszGxL8JmNY": "Luxor",
+    "1ozzKaEBsa66yLowO2PA60vRFXDCDochhGu4sLjyW0iM": "Ismailia",
+    "1jzNhXxuSL6wkVOgO3HCVsf9eAMVR4kBVerDI-hFc4Rw": "Suez",
+    "1fAF5fE98QtRsJe_FNqa1IL7SQhdMH_7ZMjQ6sdE0xe4": "Aswan",
+    "12O43L7eTbYcUuXv6UAfCcFgiRTDSN51QeD33_zs0FSI": "Port Said",
+    "1ra91ajdyoiHr1-sFb2GG8f6veWWcLdxmE_tjYJK73Ag": "South Sinai"
+}
 
 # Cache expiration in seconds for live Google Sheets sync
 CACHE_TTL_SECONDS = 30

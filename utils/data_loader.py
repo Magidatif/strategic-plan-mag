@@ -4,7 +4,7 @@ import io
 import re
 import streamlit as st
 import datetime
-from config import SHEET_IDS, CACHE_TTL_SECONDS
+from config import SHEET_SOURCES, CACHE_TTL_SECONDS
 
 # Session reuse for HTTP Connection Pooling (much faster fetches)
 session = requests.Session()
@@ -17,7 +17,7 @@ def load_data():
     """
     try:
         all_dfs = []
-        for sheet_id in SHEET_IDS:
+        for sheet_id, expected_branch_name in SHEET_SOURCES.items():
             try:
                 xlsx_url = f"https://docs.google.com/spreadsheets/d/{sheet_id}/export?format=xlsx"
                 resp = session.get(xlsx_url, timeout=15)
@@ -28,26 +28,8 @@ def load_data():
                 
                 for tab_name, df_tab in df_dict.items():
                     try:
-                        # Check if branch name is provided in column '0' or 0
-                        if '0' in df_tab.columns:
-                            df_tab = df_tab.rename(columns={'0': 'Branch Name'})
-                        elif 0 in df_tab.columns:
-                            df_tab = df_tab.rename(columns={0: 'Branch Name'})
-                            
-                        # If 'Branch Name' still doesn't exist, fallback to Tab Name
-                        if 'Branch Name' not in df_tab.columns:
-                            clean_gov_name = tab_name.strip().title()
-                            if 'portsaed' in tab_name.lower(): clean_gov_name = 'Port Said'
-                            elif 'sinai' in tab_name.lower() or 's.sinai' in tab_name.lower(): clean_gov_name = 'South Sinai'
-                            elif 'ismailia' in tab_name.lower(): clean_gov_name = 'Ismailia'
-                            elif 'suez' in tab_name.lower(): clean_gov_name = 'Suez'
-                            elif 'aswan' in tab_name.lower(): clean_gov_name = 'Aswan'
-                            elif 'luxor' in tab_name.lower(): clean_gov_name = 'Luxor'
-                            df_tab['Branch Name'] = clean_gov_name
-                        
-                        # Clean up the branch name strings
-                        df_tab['Branch Name'] = df_tab['Branch Name'].astype(str).str.strip().str.title()
-                        
+                        # Hardcode the known branch name from config instead of guessing from arbitrary columns
+                        df_tab['Branch Name'] = expected_branch_name
                         all_dfs.append(df_tab)
                     except Exception:
                         continue
