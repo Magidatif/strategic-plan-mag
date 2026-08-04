@@ -1,0 +1,93 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap');
+
+html, body, [class*="css"] {
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif !important;
+}
+
+/* Header Banner */
+.main-header {
+    background: linear-gradient(135deg, #0F172A 0%, #1E293B 50%, #0F766E 100%);
+    padding: 24px 28px;
+    border-radius: 16px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    margin-bottom: 24px;
+}
+
+.main-header h1 {
+    font-size: 2.1rem;
+    font-weight: 800;
+    color: #FFFFFF !important;
+    margin: 0;
+    padding-bottom: 6px;
+}
+
+.main-header p {
+    color: #CBD5E1 !important;
+    font-size: 1rem;
+    margin: 0;
+}
+
+/* Metric KPI Card Base */
+.kpi-card {
+    border-radius: 14px;
+    padding: 18px;
+    text-align: center;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.kpi-card:hover {
+    transform: translateY(-4px);
+}
+
+.kpi-card .kpi-title {
+    font-size: 0.85rem;
+    font-weight: 600;
+    margin-bottom: 8px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.kpi-card .kpi-value {
+    font-size: 2rem;
+    font-weight: 800;
+}
+
+.kpi-completed { border-top: 4px solid #10B981 !important; }
+.kpi-in-progress { border-top: 4px solid #3B82F6 !important; }
+.kpi-delayed { border-top: 4px solid #EF4444 !important; }
+.kpi-rate { border-top: 4px solid #14B8A6 !important; }
+
+/* Custom Tabs Styling Base */
+.stTabs [data-baseweb="tab-list"] {
+    gap: 12px;
+    padding: 8px;
+    border-radius: 12px;
+}
+
+.stTabs [data-baseweb="tab"] {
+    height: 48px;
+    border-radius: 8px;
+    font-size: 0.95rem;
+    font-weight: 600;
+    padding: 0 20px;
+    transition: all 0.2s ease;
+}
+
+.stTabs [aria-selected="true"] {
+    background: linear-gradient(135deg, #0EA5E9 0%, #0D9488 100%) !important;
+    color: #FFFFFF !important;
+    font-weight: 700 !important;
+    box-shadow: 0 4px 14px rgba(14, 165, 233, 0.3);
+}
+
+.sync-badge {
+    display: inline-block;
+    background: rgba(20, 184, 166, 0.15);
+    color: #0D9488;
+    padding: 6px 14px;
+    border-radius: 30px;
+    font-size: 0.85rem;
+    font-weight: 600;
+    border: 1px solid rgba(20, 184, 166, 0.3);
+}
