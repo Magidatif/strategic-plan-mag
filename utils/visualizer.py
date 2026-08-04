@@ -11,13 +11,13 @@ def get_plotly_layout(is_dark=True):
         paper_bgcolor='rgba(0,0,0,0)',
         plot_bgcolor='rgba(0,0,0,0)',
         font=dict(family='Inter, sans-serif', color=text_color, size=13),
-        margin=dict(l=20, r=20, t=50, b=30),
+        margin=dict(l=20, r=20, t=60, b=80),
         legend=dict(
             orientation="h",
-            yanchor="bottom",
-            y=1.02,
-            xanchor="left",
-            x=0,
+            yanchor="top",
+            y=-0.2,
+            xanchor="center",
+            x=0.5,
             font=dict(color=muted_color)
         )
     )
@@ -183,7 +183,7 @@ def create_priority_status_chart(df, is_dark=True):
         labels={'Priority': 'Priority Level', 'Count': 'Number of Activities', 'Status_EN': 'Status'},
         title="Activities Distribution by Priority & Execution Status"
     )
-    fig.update_layout(height=320, xaxis=dict(gridcolor=grid_color), yaxis=dict(gridcolor=grid_color), **get_plotly_layout(is_dark))
+    fig.update_layout(height=380, xaxis=dict(gridcolor=grid_color), yaxis=dict(gridcolor=grid_color), **get_plotly_layout(is_dark))
     return fig
 
 def create_gap_summary_chart(gap_df, is_dark=True):

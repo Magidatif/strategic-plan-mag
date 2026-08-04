@@ -68,6 +68,13 @@ def load_data():
         df.loc[df['STATUS_clean'].str.contains('complete', na=False), 'STATUS_std'] = 'Completed'
         df.loc[df['STATUS_clean'].str.contains('delay', na=False), 'STATUS_std'] = 'delayed'
         
+        # Standardize Priority
+        df['Priority_clean'] = df['Priority'].astype(str).str.strip().str.lower()
+        df['Priority'] = 'Unspecified'
+        df.loc[df['Priority_clean'].str.contains('high', na=False), 'Priority'] = 'High'
+        df.loc[df['Priority_clean'].str.contains('medium|midium', na=False), 'Priority'] = 'Medium'
+        df.loc[df['Priority_clean'].str.contains('low', na=False), 'Priority'] = 'Low'
+
         # Clean string columns
         string_cols = ['Branch Name', 'STRATEGIC OBJECTIVES', 'OUTCOMES / PROGRAMS', 
                        'Activity', 'Sub-Activity', 'Priority', 'responsable dep', 'month', 'Gap Cause',
