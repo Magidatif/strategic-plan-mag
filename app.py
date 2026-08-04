@@ -87,6 +87,9 @@ with st.sidebar:
         # Filter 5: Priority
         priorities = ['All'] + sorted([str(x) for x in df_raw['Priority'].unique() if str(x) != 'Unspecified'])
         selected_priority = st.selectbox("⚡ Priority Level:", priorities)
+        
+        # Add padding to prevent dropdown cutoff
+        st.markdown("<br><br><br><br><br>", unsafe_allow_html=True)
 
 # Card colors based on theme
 kpi_bg = "rgba(30, 41, 59, 0.8)" if is_dark else "#FFFFFF"
