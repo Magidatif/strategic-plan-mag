@@ -236,12 +236,15 @@ with tab_departments:
     if 'delayed' in dept_status_summary.columns: rename_dict['delayed'] = 'Delayed 🔴'
     
     dept_status_summary = dept_status_summary.rename(columns=rename_dict)
+    dept_status_summary.index.name = 'Department'
     
     # Native Streamlit visual chart for Department Status
     st.bar_chart(dept_status_summary)
     
+    th_styles = [{'selector': 'th', 'props': [('color', 'black'), ('font-weight', 'bold')]}]
+    
     with st.expander("📋 View Department Data Summary Table"):
-        st.dataframe(dept_status_summary.style.set_properties(**{'font-weight': 'bold', 'color': 'black'}), use_container_width=True)
+        st.dataframe(dept_status_summary.style.set_properties(**{'font-weight': 'bold', 'color': 'black'}).set_table_styles(th_styles), use_container_width=True)
 
 # --- TAB 3: GAP ANALYSIS & RISKS ---
 with tab_gaps:
@@ -275,8 +278,9 @@ with tab_gaps:
             'Completion %', 'Gap Cause', 'Proposed Action', 'Required Resources', 'Department'
         ]
         
+        th_styles = [{'selector': 'th', 'props': [('color', 'black'), ('font-weight', 'bold')]}]
         st.dataframe(
-            show_gap_df.style.set_properties(**{'font-weight': 'bold', 'color': 'black'}),
+            show_gap_df.style.set_properties(**{'font-weight': 'bold', 'color': 'black'}).set_table_styles(th_styles),
             column_config={
                 "Completion %": st.column_config.ProgressColumn(
                     "Completion %",
@@ -334,8 +338,9 @@ with tab_data:
     table_df['Status'] = table_df['Status'].map(STATUS_MAP_EN)
     table_df['Priority'] = table_df['Priority'].map(PRIORITY_MAP_EN)
     
+    th_styles = [{'selector': 'th', 'props': [('color', 'black'), ('font-weight', 'bold')]}]
     st.dataframe(
-        table_df.style.set_properties(**{'font-weight': 'bold', 'color': 'black'}),
+        table_df.style.set_properties(**{'font-weight': 'bold', 'color': 'black'}).set_table_styles(th_styles),
         column_config={
             "Completion Rate": st.column_config.ProgressColumn(
                 "Completion %",
