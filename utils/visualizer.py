@@ -96,6 +96,8 @@ def create_department_performance_chart(df, is_dark=True):
     """Render completion rate ranking per department"""
     dept_df = df.groupby('responsable dep')['completion_numeric'].agg(['mean', 'count']).reset_index()
     dept_df.columns = ['Department', 'Avg_Completion', 'Total_Tasks']
+    dept_df['Full_Department'] = dept_df['Department'].astype(str).str.title()
+    dept_df['Department'] = dept_df['Full_Department'].apply(lambda x: x[:35] + '...' if len(x) > 35 else x)
     dept_df = dept_df.sort_values(by='Avg_Completion', ascending=True)
     
     fig = px.bar(
@@ -126,7 +128,6 @@ def create_department_performance_chart(df, is_dark=True):
         yaxis=dict(gridcolor=grid_color, title="", automargin=True),
         **get_plotly_layout(is_dark)
     )
-    fig.update_layout(margin=dict(l=250, r=40))
     return fig
 
 def create_objective_progress_chart(df, is_dark=True):
@@ -134,7 +135,7 @@ def create_objective_progress_chart(df, is_dark=True):
     obj_df = df.groupby('STRATEGIC OBJECTIVES')['completion_numeric'].mean().reset_index()
     obj_df.columns = ['Objective', 'Avg_Completion']
     
-    obj_df['Short_Objective'] = obj_df['Objective'].apply(lambda x: str(x)[:70] + '...' if len(str(x)) > 70 else str(x))
+    obj_df['Short_Objective'] = obj_df['Objective'].apply(lambda x: str(x)[:35] + '...' if len(str(x)) > 35 else str(x))
     obj_df = obj_df.sort_values(by='Avg_Completion', ascending=True)
     
     fig = px.bar(
@@ -162,7 +163,6 @@ def create_objective_progress_chart(df, is_dark=True):
         yaxis=dict(gridcolor=grid_color, title="", automargin=True),
         **get_plotly_layout(is_dark)
     )
-    fig.update_layout(margin=dict(l=250, r=40))
     return fig
 
 def create_priority_status_chart(df, is_dark=True):
