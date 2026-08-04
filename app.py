@@ -11,7 +11,7 @@ st.set_page_config(
     initial_sidebar_state="expanded"
 )
 
-from config import GOOGLE_SHEET_URL, COLORS, STATUS_MAP_EN, PRIORITY_MAP_EN
+from config import COLORS, STATUS_MAP_EN, PRIORITY_MAP_EN
 from utils.data_loader import load_data
 from utils.visualizer import (
     create_overall_completion_gauge,
@@ -55,13 +55,9 @@ with st.sidebar:
     </div>
     """, unsafe_allow_html=True)
     
-    col_ref1, col_ref2 = st.columns(2)
-    with col_ref1:
-        if st.button("🔄 Refresh", use_container_width=True):
-            st.cache_data.clear()
-            st.rerun()
-    with col_ref2:
-        st.markdown(f'<a href="{GOOGLE_SHEET_URL}" target="_blank" style="text-decoration: none;"><button style="width: 100%; height: 38px; border-radius: 8px; background: #334155; color: white; border: none; cursor: pointer;">📂 Open Sheet</button></a>', unsafe_allow_html=True)
+    if st.button("🔄 Refresh Data", use_container_width=True):
+        st.cache_data.clear()
+        st.rerun()
         
     st.divider()
     st.subheader("🔍 Filters & Options")

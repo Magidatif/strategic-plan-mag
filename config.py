@@ -2,10 +2,14 @@
 Configuration file for Governorate Strategic Plan Dashboard (English Version)
 """
 
-SHEET_ID = "1g6vWMzylEvSmv9ixgy5haabs5d-axokNKoc9Y9fLcYs"
-GID = "169902006"
-GOOGLE_SHEET_URL = f"https://docs.google.com/spreadsheets/d/{SHEET_ID}/edit?gid={GID}#gid={GID}"
-CSV_EXPORT_URL = f"https://docs.google.com/spreadsheets/d/{SHEET_ID}/export?format=csv&gid={GID}"
+SHEET_IDS = [
+    "1g8Hj76hwEpDyw4fveVG-zSV909NvoiIrbszGxL8JmNY",
+    "1ozzKaEBsa66yLowO2PA60vRFXDCDochhGu4sLjyW0iM",
+    "1jzNhXxuSL6wkVOgO3HCVsf9eAMVR4kBVerDI-hFc4Rw",
+    "1fAF5fE98QtRsJe_FNqa1IL7SQhdMH_7ZMjQ6sdE0xe4",
+    "12O43L7eTbYcUuXv6UAfCcFgiRTDSN51QeD33_zs0FSI",
+    "1ra91ajdyoiHr1-sFb2GG8f6veWWcLdxmE_tjYJK73Ag"
+]
 
 # Cache expiration in seconds for live Google Sheets sync
 CACHE_TTL_SECONDS = 30

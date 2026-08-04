@@ -4,7 +4,7 @@ import io
 import re
 import streamlit as st
 import datetime
-from config import SHEET_ID, CACHE_TTL_SECONDS
+from config import SHEET_IDS, CACHE_TTL_SECONDS
 
 # Session reuse for HTTP Connection Pooling (much faster fetches)
 session = requests.Session()
@@ -16,23 +16,31 @@ def load_data():
     Utilizes HTTP connection pooling and vectorized pandas operations.
     """
     try:
-        xlsx_url = f"https://docs.google.com/spreadsheets/d/{SHEET_ID}/export?format=xlsx"
-        df_dict = pd.read_excel(xlsx_url, engine='openpyxl', sheet_name=None)
-        
         all_dfs = []
-        for tab_name, df_tab in df_dict.items():
+        for sheet_id in SHEET_IDS:
             try:
-                # Clean Governorate Title
-                clean_gov_name = tab_name.strip().title()
-                if 'portsaed' in tab_name.lower(): clean_gov_name = 'Port Said'
-                elif 'sinai' in tab_name.lower() or 's.sinai' in tab_name.lower(): clean_gov_name = 'South Sinai'
-                elif 'ismailia' in tab_name.lower(): clean_gov_name = 'Ismailia'
-                elif 'suez' in tab_name.lower(): clean_gov_name = 'Suez'
-                elif 'aswan' in tab_name.lower(): clean_gov_name = 'Aswan'
-                elif 'luxor' in tab_name.lower(): clean_gov_name = 'Luxor'
+                xlsx_url = f"https://docs.google.com/spreadsheets/d/{sheet_id}/export?format=xlsx"
+                resp = session.get(xlsx_url, timeout=15)
+                if resp.status_code != 200:
+                    continue
                 
-                df_tab['Branch Name'] = clean_gov_name
-                all_dfs.append(df_tab)
+                df_dict = pd.read_excel(io.BytesIO(resp.content), engine='openpyxl', sheet_name=None)
+                
+                for tab_name, df_tab in df_dict.items():
+                    try:
+                        # Clean Governorate Title
+                        clean_gov_name = tab_name.strip().title()
+                        if 'portsaed' in tab_name.lower(): clean_gov_name = 'Port Said'
+                        elif 'sinai' in tab_name.lower() or 's.sinai' in tab_name.lower(): clean_gov_name = 'South Sinai'
+                        elif 'ismailia' in tab_name.lower(): clean_gov_name = 'Ismailia'
+                        elif 'suez' in tab_name.lower(): clean_gov_name = 'Suez'
+                        elif 'aswan' in tab_name.lower(): clean_gov_name = 'Aswan'
+                        elif 'luxor' in tab_name.lower(): clean_gov_name = 'Luxor'
+                        
+                        df_tab['Branch Name'] = clean_gov_name
+                        all_dfs.append(df_tab)
+                    except Exception:
+                        continue
             except Exception:
                 continue
                 
