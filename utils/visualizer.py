@@ -173,12 +173,14 @@ def create_priority_status_chart(df, is_dark=True):
     
     grid_color = '#334155' if is_dark else '#E2E8F0'
     
+    priority_status['Text_Label'] = priority_status['Status_EN'] + ': ' + priority_status['Count'].astype(str)
+    
     fig = px.bar(
         priority_status,
         x='Priority',
         y='Count',
         color='Status_EN',
-        text='Count',
+        text='Text_Label',
         color_discrete_map=color_map,
         barmode='group',
         labels={'Priority': 'Priority Level', 'Count': 'Number of Activities', 'Status_EN': 'Status'},
