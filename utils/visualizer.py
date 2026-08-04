@@ -85,10 +85,10 @@ def create_status_donut_chart(df, is_dark=True):
     border_color = '#0F172A' if is_dark else '#FFFFFF'
     fig.update_traces(
         textposition='outside', 
-        textinfo='percent+label+value',
+        texttemplate='<b>%{value}</b> (%{percent})',
         marker=dict(line=dict(color=border_color, width=2))
     )
-    fig.update_layout(height=300, **get_plotly_layout(is_dark))
+    fig.update_layout(height=350, **get_plotly_layout(is_dark))
     return fig
 
 def create_department_performance_chart(df, is_dark=True):
