@@ -4,7 +4,7 @@ import pandas as pd
 from config import COLORS
 
 def get_plotly_layout(is_dark=True):
-    text_color = '#F8FAFC' if is_dark else '#0F172A'
+    text_color = '#F8FAFC' if is_dark else '#000000'
     muted_color = '#94A3B8' if is_dark else '#64748B'
     
     return dict(
@@ -24,7 +24,7 @@ def get_plotly_layout(is_dark=True):
 
 def create_overall_completion_gauge(completion_avg, is_dark=True):
     """Render a semi-circle gauge meter for total completion percentage"""
-    text_color = '#F8FAFC' if is_dark else '#0F172A'
+    text_color = '#F8FAFC' if is_dark else '#000000'
     bg_color = "#1E293B" if is_dark else "#F1F5F9"
     border_color = "#334155" if is_dark else "#CBD5E1"
     
@@ -113,7 +113,7 @@ def create_department_performance_chart(df, is_dark=True):
     border_color = '#0F172A' if is_dark else '#FFFFFF'
     grid_color = '#334155' if is_dark else '#E2E8F0'
     
-    text_color = '#F8FAFC' if is_dark else '#0F172A'
+    text_color = '#F8FAFC' if is_dark else '#000000'
     fig.update_traces(
         textposition='outside',
         textfont=dict(color=text_color, size=14),
@@ -148,7 +148,7 @@ def create_objective_progress_chart(df, is_dark=True):
     )
     grid_color = '#334155' if is_dark else '#E2E8F0'
     
-    text_color = '#F8FAFC' if is_dark else '#0F172A'
+    text_color = '#F8FAFC' if is_dark else '#000000'
     fig.update_traces(
         text=obj_df['Avg_Completion'].apply(lambda x: f"{x:.1f}%"),
         textposition='outside',
@@ -190,7 +190,7 @@ def create_priority_status_chart(df, is_dark=True):
         labels={'Priority': 'Priority Level', 'Count': 'Number of Activities', 'Status_EN': 'Status'},
         title="Activities Distribution by Priority & Execution Status"
     )
-    text_color = '#F8FAFC' if is_dark else '#0F172A'
+    text_color = '#F8FAFC' if is_dark else '#000000'
     fig.update_traces(
         textposition='outside',
         textfont=dict(color=text_color, size=14)
