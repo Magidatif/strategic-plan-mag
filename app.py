@@ -34,7 +34,9 @@ inject_css()
 
 # Sidebar Theme Switcher & Controls
 with st.sidebar:
-
+    st.image("assets/logo.png", use_container_width=True)
+    st.markdown("<br>", unsafe_allow_html=True)
+    
     is_dark = False
     
     st.markdown(f"""
