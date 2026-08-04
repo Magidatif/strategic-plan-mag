@@ -63,15 +63,19 @@ html, body, [class*="css"] {
     gap: 12px;
     padding: 8px;
     border-radius: 12px;
+    flex-wrap: wrap;
 }
 
 .stTabs [data-baseweb="tab"] {
-    height: 48px;
+    height: auto;
+    min-height: 48px;
     border-radius: 8px;
     font-size: 0.95rem;
     font-weight: 600;
-    padding: 0 20px;
+    padding: 10px 20px;
     transition: all 0.2s ease;
+    white-space: normal;
+    text-align: center;
 }
 
 .stTabs [aria-selected="true"] {
