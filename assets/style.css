@@ -97,3 +97,7 @@ header { visibility: hidden; }
 footer { visibility: hidden; }
 #MainMenu { visibility: hidden; }
 [data-testid="stToolbar"] { visibility: hidden; }
+[data-testid="stAppDeployButton"] { visibility: hidden; display: none; }
+.stDeployButton { visibility: hidden; display: none; }
+[class*="viewerBadge"] { visibility: hidden; display: none; }
+[class*="stDeployButton"] { visibility: hidden; display: none; }
