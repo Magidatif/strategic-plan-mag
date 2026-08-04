@@ -240,7 +240,7 @@ def create_activity_treemap(df, is_dark=True):
     
     # Truncate very long texts for better visualization
     for col in group_cols:
-        tree_df[col] = tree_df[col].astype(str).apply(lambda x: x[:40] + '...' if len(x) > 40 else x)
+        tree_df[col] = tree_df[col].apply(lambda x: str(x)[:40] + '...' if len(str(x)) > 40 else str(x))
         
     agg_df = tree_df.groupby(group_cols).agg(
         Count=('Activity', 'size'),
