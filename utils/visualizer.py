@@ -122,10 +122,11 @@ def create_department_performance_chart(df, is_dark=True):
     fig.update_layout(
         height=max(350, len(dept_df) * 35),
         coloraxis_showscale=False,
-        xaxis=dict(range=[0, 115], gridcolor=grid_color),
+        xaxis=dict(range=[0, 120], gridcolor=grid_color),
         yaxis=dict(gridcolor=grid_color, title="", automargin=True),
         **get_plotly_layout(is_dark)
     )
+    fig.update_layout(margin=dict(l=250, r=40))
     return fig
 
 def create_objective_progress_chart(df, is_dark=True):
@@ -157,10 +158,11 @@ def create_objective_progress_chart(df, is_dark=True):
     fig.update_layout(
         height=max(300, len(obj_df) * 45),
         coloraxis_showscale=False,
-        xaxis=dict(range=[0, 115], gridcolor=grid_color),
+        xaxis=dict(range=[0, 120], gridcolor=grid_color),
         yaxis=dict(gridcolor=grid_color, title="", automargin=True),
         **get_plotly_layout(is_dark)
     )
+    fig.update_layout(margin=dict(l=250, r=40))
     return fig
 
 def create_priority_status_chart(df, is_dark=True):
@@ -226,4 +228,5 @@ def create_gap_summary_chart(gap_df, is_dark=True):
         textfont=dict(color=text_color, size=14)
     )
     fig.update_layout(height=280, coloraxis_showscale=False, xaxis=dict(gridcolor=grid_color), yaxis=dict(gridcolor=grid_color, title="", automargin=True), **get_plotly_layout(is_dark))
+    fig.update_layout(margin=dict(l=250, r=40))
     return fig
