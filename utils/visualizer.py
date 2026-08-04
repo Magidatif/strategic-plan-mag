@@ -156,7 +156,7 @@ def create_objective_progress_chart(df, is_dark=True):
     fig.update_layout(
         height=max(300, len(obj_df) * 45),
         coloraxis_showscale=False,
-        xaxis=dict(range=[0, 120], gridcolor=grid_color),
+        xaxis=dict(range=[0, 120], gridcolor=grid_color, title="Average Completion Rate (%)"),
         yaxis=dict(gridcolor=grid_color, title="", automargin=True),
         **get_plotly_layout(is_dark)
     )

@@ -224,7 +224,7 @@ with tab_overview:
     
     st.divider()
     
-    st.markdown("#### 🎯 Completion Rate by Strategic Objective")
+    st.markdown("#### 🎯 STRATEGIC OBJECTIVES")
     obj_fig = create_objective_progress_chart(df_filtered, is_dark=is_dark)
     st.plotly_chart(obj_fig, use_container_width=True, key=f"obj_{is_dark}", theme=None)
         
