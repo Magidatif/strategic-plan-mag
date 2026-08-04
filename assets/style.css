@@ -95,7 +95,7 @@ html, body, [class*="css"] {
 /* Hide Streamlit Default UI Elements */
 footer { visibility: hidden; }
 #MainMenu { visibility: hidden; }
-[data-testid="stToolbar"] { visibility: hidden; }
+[data-testid="stToolbarActions"] { visibility: hidden; display: none; }
 [data-testid="stAppDeployButton"] { visibility: hidden; display: none; }
 .stDeployButton { visibility: hidden; display: none; }
 [class*="viewerBadge"] { visibility: hidden; display: none; }
