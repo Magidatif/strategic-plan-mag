@@ -35,7 +35,14 @@ inject_css()
 # Sidebar Theme Switcher & Controls
 with st.sidebar:
     st.image("assets/logo.png", use_container_width=True)
-    st.markdown("<br>", unsafe_allow_html=True)
+    
+    st.markdown("""
+    <div style="text-align: center; margin-top: -10px; margin-bottom: 20px;">
+        <p style="font-size: 12px; color: #64748B; margin-bottom: 2px;">Design & Development:</p>
+        <p style="font-size: 14px; font-weight: 700; color: #0F172A; margin-bottom: 5px;">MAG Healthcare Solutions</p>
+        <p style="font-size: 13px; color: #10B981; font-weight: 600;">📱 WhatsApp: +20 15 05378760</p>
+    </div>
+    """, unsafe_allow_html=True)
     
     is_dark = False
     
