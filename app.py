@@ -36,9 +36,7 @@ inject_css()
 with st.sidebar:
     st.title("🎨 Theme & Controls")
     
-    # Light / Dark Mode Radio
-    theme_choice = st.radio("Appearance Mode:", ["Dark Mode 🌙", "Light Mode ☀️"], index=0, horizontal=True)
-    is_dark = (theme_choice == "Dark Mode 🌙")
+    is_dark = True
     
     st.markdown(f"""
     <div style="margin-top: 10px; margin-bottom: 15px;">
