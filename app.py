@@ -34,8 +34,7 @@ inject_css()
 
 # Sidebar Theme Switcher & Controls
 with st.sidebar:
-    st.title("🎨 Theme & Controls")
-    
+
     is_dark = False
     
     st.markdown(f"""
