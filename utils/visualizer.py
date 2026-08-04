@@ -178,11 +178,13 @@ def create_priority_status_chart(df, is_dark=True):
         x='Priority',
         y='Count',
         color='Status_EN',
+        text='Count',
         color_discrete_map=color_map,
         barmode='group',
         labels={'Priority': 'Priority Level', 'Count': 'Number of Activities', 'Status_EN': 'Status'},
         title="Activities Distribution by Priority & Execution Status"
     )
+    fig.update_traces(textposition='outside')
     fig.update_layout(height=380, xaxis=dict(gridcolor=grid_color), yaxis=dict(gridcolor=grid_color), **get_plotly_layout(is_dark))
     return fig
 
