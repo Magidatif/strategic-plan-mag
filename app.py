@@ -63,15 +63,15 @@ with st.sidebar:
 
     if not df_raw.empty:
         # Filter 1: Governorate / Branch
-        branches = ['All'] + sorted([x for x in df_raw['Branch Name'].unique() if str(x) != 'غير محدد'])
+        branches = ['All'] + sorted([str(x) for x in df_raw['Branch Name'].unique() if str(x) != 'غير محدد'])
         selected_branch = st.selectbox("📍 Governorate / Branch:", branches)
         
         # Filter 2: Strategic Objective
-        objectives = ['All'] + sorted([x for x in df_raw['STRATEGIC OBJECTIVES'].unique() if str(x) != 'غير محدد'])
+        objectives = ['All'] + sorted([str(x) for x in df_raw['STRATEGIC OBJECTIVES'].unique() if str(x) != 'غير محدد'])
         selected_objective = st.selectbox("🎯 Strategic Objective:", objectives)
         
         # Filter 3: Responsible Department
-        departments = ['All'] + sorted([x for x in df_raw['responsable dep'].unique() if str(x) != 'غير محدد'])
+        departments = ['All'] + sorted([str(x) for x in df_raw['responsable dep'].unique() if str(x) != 'غير محدد'])
         selected_department = st.selectbox("🏛️ Responsible Dept:", departments)
         
         # Filter 4: Status
