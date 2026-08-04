@@ -241,7 +241,7 @@ with tab_departments:
     st.bar_chart(dept_status_summary)
     
     with st.expander("📋 View Department Data Summary Table"):
-        st.dataframe(dept_status_summary, use_container_width=True)
+        st.dataframe(dept_status_summary.style.set_properties(**{'font-weight': 'bold', 'color': 'black'}), use_container_width=True)
 
 # --- TAB 3: GAP ANALYSIS & RISKS ---
 with tab_gaps:
@@ -276,7 +276,7 @@ with tab_gaps:
         ]
         
         st.dataframe(
-            show_gap_df,
+            show_gap_df.style.set_properties(**{'font-weight': 'bold', 'color': 'black'}),
             column_config={
                 "Completion %": st.column_config.ProgressColumn(
                     "Completion %",
@@ -335,7 +335,7 @@ with tab_data:
     table_df['Priority'] = table_df['Priority'].map(PRIORITY_MAP_EN)
     
     st.dataframe(
-        table_df,
+        table_df.style.set_properties(**{'font-weight': 'bold', 'color': 'black'}),
         column_config={
             "Completion Rate": st.column_config.ProgressColumn(
                 "Completion %",
