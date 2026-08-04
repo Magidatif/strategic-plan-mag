@@ -207,6 +207,8 @@ def create_gap_summary_chart(gap_df, is_dark=True):
     gap_counts = gap_df['responsable dep'].value_counts().reset_index()
     gap_counts.columns = ['Department', 'Gap_Count']
     gap_counts = gap_counts.head(10).sort_values(by='Gap_Count', ascending=True)
+    # Truncate long department names to prevent overlapping
+    gap_counts['Department'] = gap_counts['Department'].apply(lambda x: str(x)[:35] + '...' if len(str(x)) > 35 else str(x))
     
     grid_color = '#334155' if is_dark else '#E2E8F0'
     
@@ -217,14 +219,26 @@ def create_gap_summary_chart(gap_df, is_dark=True):
         orientation='h',
         text='Gap_Count',
         color='Gap_Count',
-        color_continuous_scale=['#F59E0B', '#EF4444']
+        color_continuous_scale=['#F59E0B', '#EF4444'],
+        labels={'Gap_Count': 'Number of Delayed Tasks', 'Department': 'Department'}
     )
     text_color = '#F8FAFC' if is_dark else '#0F172A'
     fig.update_traces(
         textposition='outside',
-        textfont=dict(color=text_color, size=14)
+        textfont=dict(color=text_color, size=13),
+        cliponaxis=False
     )
-    fig.update_layout(height=280, coloraxis_showscale=False, xaxis=dict(gridcolor=grid_color), yaxis=dict(gridcolor=grid_color, title="", automargin=True), **get_plotly_layout(is_dark))
+    
+    # Calculate a dynamic height based on the number of rows (bars)
+    dynamic_height = max(350, len(gap_counts) * 40)
+    
+    fig.update_layout(
+        height=dynamic_height, 
+        coloraxis_showscale=False, 
+        xaxis=dict(gridcolor=grid_color, title="Number of Delayed Tasks"), 
+        yaxis=dict(gridcolor=grid_color, title="", automargin=True, dtick=1), 
+        **get_plotly_layout(is_dark)
+    )
     return fig
 
 def create_activity_treemap(df, is_dark=True):
