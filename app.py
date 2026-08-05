@@ -42,7 +42,7 @@ with st.sidebar:
     <div style="text-align: center; margin-top: -10px; margin-bottom: 20px;">
         <p style="font-size: 12px; color: #64748B; margin-bottom: 2px;">Design & Development:</p>
         <p style="font-size: 14px; font-weight: 700; color: #0F172A; margin-bottom: 5px;">MAG Healthcare Solutions</p>
-        <p style="font-size: 13px; color: #10B981; font-weight: 600;">📱 WhatsApp: +20 10 67926969</p>
+        <p style="font-size: 13px; color: #10B981; font-weight: 600;">WhatsApp: +20 10 67926969</p>
     </div>
     """, unsafe_allow_html=True)
     
@@ -50,17 +50,17 @@ with st.sidebar:
     
     st.markdown(f"""
     <div style="margin-top: 10px; margin-bottom: 15px;">
-        <span class="sync-badge">🟢 Connected Live to Sheet</span><br>
+        <span class="sync-badge">Connected Live to Sheet</span><br>
         <small style="color: {'#94A3B8' if is_dark else '#64748B'};">Cache Expiration: 30s</small>
     </div>
     """, unsafe_allow_html=True)
     
-    if st.button("🔄 Refresh Data", use_container_width=True):
+    if st.button("Refresh Data", use_container_width=True):
         st.cache_data.clear()
         st.rerun()
         
     st.divider()
-    st.subheader("🔍 Filters & Options")
+    st.subheader("Filters & Options")
     
     # Fetch Data
     df_raw, last_updated, error_msg = load_data()
@@ -70,38 +70,38 @@ with st.sidebar:
         
         # Filter 1: Governorate / Branch
         branches = ['All'] + sorted([str(x) for x in df_filtered['Branch Name'].unique() if str(x) != 'غير محدد'])
-        selected_branch = st.selectbox("📍 Governorate / Branch:", branches)
+        selected_branch = st.selectbox("Governorate / Branch:", branches)
         if selected_branch != 'All':
             df_filtered = df_filtered[df_filtered['Branch Name'] == selected_branch]
         
         # Filter 2: Strategic Objective
         objectives = ['All'] + sorted([str(x) for x in df_filtered['STRATEGIC OBJECTIVES'].unique() if str(x) != 'Unspecified'])
-        selected_objective = st.selectbox("🎯 Strategic Objective:", objectives)
+        selected_objective = st.selectbox("Strategic Objective:", objectives)
         if selected_objective != 'All':
             df_filtered = df_filtered[df_filtered['STRATEGIC OBJECTIVES'] == selected_objective]
         
         # New Filter: Sub-Activity
         sub_activities = ['All'] + sorted([str(x) for x in df_filtered['Sub-Activity'].unique() if str(x) != 'Unspecified'])
-        selected_sub_activity = st.selectbox("📌 Sub-Activity:", sub_activities)
+        selected_sub_activity = st.selectbox("Sub-Activity:", sub_activities)
         if selected_sub_activity != 'All':
             df_filtered = df_filtered[df_filtered['Sub-Activity'] == selected_sub_activity]
         
         # Filter 3: Responsible Department
         departments = ['All'] + sorted([str(x) for x in df_filtered['responsable dep'].unique() if str(x) != 'غير محدد'])
-        selected_department = st.selectbox("🏛️ Responsible Dept:", departments)
+        selected_department = st.selectbox("Responsible Dept:", departments)
         if selected_department != 'All':
             df_filtered = df_filtered[df_filtered['responsable dep'] == selected_department]
         
         # Filter 4: Status
         statuses = ['All', 'Completed', 'In Progress', 'Delayed']
-        selected_status_filter = st.selectbox("🚦 Execution Status:", statuses)
+        selected_status_filter = st.selectbox("Execution Status:", statuses)
         if selected_status_filter != 'All':
             status_map_lookup = {'Completed': 'Completed', 'In Progress': 'in progress', 'Delayed': 'delayed'}
             df_filtered = df_filtered[df_filtered['STATUS_std'] == status_map_lookup[selected_status_filter]]
         
         # Filter 5: Priority
         priorities = ['All'] + sorted([str(x) for x in df_filtered['Priority'].unique() if str(x) != 'Unspecified'])
-        selected_priority = st.selectbox("⚡ Priority Level:", priorities)
+        selected_priority = st.selectbox("Priority Level:", priorities)
         if selected_priority != 'All':
             df_filtered = df_filtered[df_filtered['Priority'] == selected_priority]
         
@@ -119,7 +119,7 @@ st.markdown("""
 <div class="main-header">
     <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap;">
         <div>
-            <h1>🏥 Governorates Strategic Plan Executive Dashboard</h1>
+            <h1>Governorates Strategic Plan Executive Dashboard</h1>
             <p>Real-time KPI Tracking, Operational Performance, Completion Analytics & Gap Controls — Live Google Sheets Sync</p>
         </div>
     </div>
@@ -128,12 +128,12 @@ st.markdown("""
 
 # Handle Fetch Errors
 if error_msg:
-    st.error(f"❌ Error connecting to Google Sheets: {error_msg}")
+    st.error(f"Error connecting to Google Sheets: {error_msg}")
     st.info("Please verify internet connection and sheet sharing permissions.")
     st.stop()
 
 if df_raw.empty:
-    st.warning("⚠️ No data available in the Google Sheet.")
+    st.warning("No data available in the Google Sheet.")
     st.stop()
 
 # Compute Key Metrics
@@ -190,16 +190,16 @@ st.markdown("<br>", unsafe_allow_html=True)
 
 # Dashboard Tabs
 tab_overview, tab_departments, tab_activities, tab_gaps, tab_data = st.tabs([
-    "📊 Executive Summary",
-    "🏛️ Dept. Performance",
-    "🧩 Activities & Hierarchy",
-    "⚠️ Gap Analysis",
-    "📋 Data Export"
+    "Executive Summary",
+    "Dept. Performance",
+    "Activities & Hierarchy",
+    "Gap Analysis",
+    "Data Export"
 ])
 
 # --- TAB 1: EXECUTIVE OVERVIEW ---
 with tab_overview:
-    st.subheader("📈 Overall Completion & Execution Analytics")
+    st.subheader("Overall Completion & Execution Analytics")
     
     # Progress Bar Meter
     progress_val = min(max(float(avg_completion) / 100.0, 0.0), 1.0)
@@ -208,42 +208,42 @@ with tab_overview:
     
     st.markdown("<br>", unsafe_allow_html=True)
     
-    st.markdown("#### ⏱️ Overall Completion Gauge")
+    st.markdown("#### Overall Completion Gauge")
     gauge_fig = create_overall_completion_gauge(avg_completion, is_dark=is_dark)
     st.plotly_chart(gauge_fig, use_container_width=True, key=f"gauge_{is_dark}", theme=None)
         
     st.divider()
 
-    st.markdown("#### 🍩 Execution Status Breakdown")
+    st.markdown("#### Execution Status Breakdown")
     donut_fig = create_status_donut_chart(df_filtered, is_dark=is_dark)
     st.plotly_chart(donut_fig, use_container_width=True, key=f"donut_{is_dark}", theme=None)
     
     st.divider()
     
-    st.markdown("#### 🎯 STRATEGIC OBJECTIVES")
+    st.markdown("#### Strategic Objectives")
     obj_fig = create_objective_progress_chart(df_filtered, is_dark=is_dark)
     st.plotly_chart(obj_fig, use_container_width=True, key=f"obj_{is_dark}", theme=None)
         
     st.divider()
 
-    st.markdown("#### ⚡ Priority & Execution Status Breakdown")
+    st.markdown("#### Priority & Execution Status Breakdown")
     prio_fig = create_priority_status_chart(df_filtered, is_dark=is_dark)
     st.plotly_chart(prio_fig, use_container_width=True, key=f"prio_{is_dark}", theme=None)
 
 # --- TAB 2: DEPARTMENT PERFORMANCE ---
 with tab_departments:
-    st.markdown("### 🏛️ Department Workload & Performance Ranking")
+    st.markdown("### Department Workload & Performance Ranking")
     dept_fig = create_department_performance_chart(df_filtered, is_dark=is_dark)
     st.plotly_chart(dept_fig, use_container_width=True, key=f"dept_{is_dark}", theme=None)
     
     st.divider()
-    st.markdown("### 📊 Task Status Breakdown per Department")
+    st.markdown("### Task Status Breakdown per Department")
     dept_status_summary = df_filtered.groupby(['responsable dep', 'STATUS_std']).size().unstack(fill_value=0)
     
     rename_dict = {}
-    if 'Completed' in dept_status_summary.columns: rename_dict['Completed'] = 'Completed 🟢'
-    if 'in progress' in dept_status_summary.columns: rename_dict['in progress'] = 'In Progress 🔵'
-    if 'delayed' in dept_status_summary.columns: rename_dict['delayed'] = 'Delayed 🔴'
+    if 'Completed' in dept_status_summary.columns: rename_dict['Completed'] = 'Completed'
+    if 'in progress' in dept_status_summary.columns: rename_dict['in progress'] = 'In Progress'
+    if 'delayed' in dept_status_summary.columns: rename_dict['delayed'] = 'Delayed'
     
     dept_status_summary = dept_status_summary.rename(columns=rename_dict)
     dept_status_summary.index.name = 'Department'
@@ -258,8 +258,8 @@ with tab_departments:
 
 # --- TAB 3: ACTIVITIES & SUB-ACTIVITIES ---
 with tab_activities:
-    st.markdown("### 🧩 Strategic Activities & Sub-Activities Hierarchy")
-    st.info("💡 **Interactive Treemap:** Click on any Objective or Activity block to zoom in and view its specific Sub-Activities. Box size represents the number of tasks, while color represents the average completion rate (Red = Delayed/0%, Green = Completed/100%).")
+    st.markdown("### Strategic Activities & Sub-Activities Hierarchy")
+    st.info("Interactive Treemap: Click on any Objective or Activity block to zoom in and view its specific Sub-Activities. Box size represents the number of tasks, while color represents the average completion rate (Red = Delayed/0%, Green = Completed/100%).")
     
     treemap_fig = create_activity_treemap(df_filtered, is_dark=is_dark)
     if treemap_fig:
@@ -269,14 +269,14 @@ with tab_activities:
         
     st.divider()
     
-    st.markdown("### 🚧 All Active Sub-Activities (Started & Completed)")
+    st.markdown("### All Active Sub-Activities (Started & Completed)")
     bottom_fig = create_bottom_activities_chart(df_filtered, is_dark=is_dark)
     st.plotly_chart(bottom_fig, use_container_width=True, key=f"bottom_{is_dark}", theme=None)
 
 # --- TAB 4: GAP ANALYSIS & RISKS ---
 with tab_gaps:
-    st.markdown("### ⚠️ Operational Gap Control & Corrective Action Matrix")
-    st.info("💡 Highlighting activities with operational gaps, high priorities, or delayed status requiring immediate intervention.")
+    st.markdown("### Operational Gap Analysis & Controls")
+    st.info("Highlighting activities with operational gaps, high priorities, or delayed status requiring immediate intervention.")
     
     gap_df = df_filtered[(df_filtered['STATUS_std'] == 'delayed') | 
                          (df_filtered['Priority'] == 'High') | 
@@ -292,7 +292,7 @@ with tab_gaps:
         st.divider()
     
     if gap_df.empty:
-        st.success("🎉 No high-risk operational gaps or delayed activities found in current selection!")
+        st.success("No high-risk operational gaps or delayed activities found in current selection!")
     else:
         display_gap_cols = [
             'Branch Name', 'STRATEGIC OBJECTIVES', 'Activity', 'Sub-Activity', 'Priority', 
@@ -322,11 +322,11 @@ with tab_gaps:
 
 # --- TAB 4: MASTER DATA TABLE & EXPORT ---
 with tab_data:
-    st.markdown("### 📋 Complete Strategic Activities Master Directory")
+    st.markdown("### Master Strategic Data Table")
     
     col_search, col_export = st.columns([3, 1])
     with col_search:
-        search_query = st.text_input("🔍 Search Activity, KPI, or Department:", "")
+        search_query = st.text_input("Search Activity, KPI, or Department:", "")
         
     master_display = df_filtered.copy()
     if search_query:

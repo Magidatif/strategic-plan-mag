@@ -30,13 +30,13 @@ COLORS = {
 }
 
 STATUS_MAP_EN = {
-    'Completed': 'Completed 🟢',
-    'in progress': 'In Progress 🔵',
-    'delayed': 'Delayed 🔴'
+    'Completed': 'Completed',
+    'in progress': 'In Progress',
+    'delayed': 'Delayed'
 }
 
 PRIORITY_MAP_EN = {
-    'High': 'High ⚠️',
-    'Medium': 'Medium ⚡',
-    'Low': 'Low ℹ️'
+    'High': 'High',
+    'Medium': 'Medium',
+    'Low': 'Low'
 }
